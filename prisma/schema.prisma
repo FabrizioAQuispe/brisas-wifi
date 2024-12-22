@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model administradores {
+  id_admin Int        @id @default(autoincrement())
+  nombre   String?    @db.VarChar(150)
+  correo   String?    @db.VarChar(100)
+  password String?    @db.VarChar(100)
+  eventos  eventos[]
+  usuarios usuarios[]
+}
+
+model eventos {
+  id_evento       Int              @id @default(autoincrement())
+  id_admin        Int?
+  id_user         Int?
+  nombre          String?          @db.VarChar(150)
+  descripcion     String?          @db.VarChar(200)
+  precio          Float?           @db.Float
+  fec_create      DateTime?        @db.DateTime(0)
+  fec_ini         String?          @db.VarChar(50)
+  fec_fin         String?          @db.VarChar(50)
+  administradores administradores? @relation(fields: [id_admin], references: [id_admin], onDelete: NoAction, onUpdate: NoAction, map: "eventos_ibfk_1")
+  usuarios        usuarios?        @relation(fields: [id_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "eventos_ibfk_2")
+
+  @@index([id_admin], map: "id_admin")
+  @@index([id_user], map: "id_user")
+}
+
+model usuarios {
+  id_user         Int              @id @default(autoincrement())
+  id_admin        Int?
+  ip_user         String?          @db.VarChar(255)
+  nombre          String?          @db.VarChar(250)
+  dni             Int?
+  correo          String?          @db.VarChar(250)
+  password        String?          @db.VarChar(200)
+  fec_nac         DateTime?        @db.DateTime(0)
+  fec_create      DateTime?        @default(now()) @db.DateTime(0)
+  eventos         eventos[]
+  administradores administradores? @relation(fields: [id_admin], references: [id_admin], onDelete: NoAction, onUpdate: NoAction, map: "usuarios_ibfk_1")
+
+  @@index([id_admin], map: "id_admin")
+}
