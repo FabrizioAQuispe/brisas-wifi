@@ -28,7 +28,6 @@ export class UsuariosService {
                 dni: user_found.dni,
                 fec_create: user_found.fec_create,
                 fec_nac: user_found.fec_nac,
-                ip_user: user_found.ip_user
             }
 
             if(!result){

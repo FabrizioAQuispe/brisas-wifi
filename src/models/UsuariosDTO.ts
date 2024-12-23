@@ -4,7 +4,6 @@ export interface LoginUsuario{
 }
 export interface PerfilUsuarioDTO{
     id_user:number,
-    ip_user:string,
     nombre:string,
     dni:number,
     fec_nac:Date,
