@@ -11,6 +11,8 @@ export class UsuariosController {
 
     @Post('/auth/login') 
     async loginUsuarios(@Body() loginInput: LoginAdministradoresDTO): Promise<PerfilUsuarioDTO> {
-        return await this.usuariosService.loginUsuarios(loginInput);
+        const response = await this.usuariosService.loginUsuarios(loginInput);
+        console.log(response);
+        return response;
     }
 }
